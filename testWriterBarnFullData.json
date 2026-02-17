@@ -1,0 +1,101 @@
+{
+    "name": "Epona Stables",
+    "days": [
+        {
+            "dayOfWeek": "M",
+            "notes": [{"body": "Farrier appointment for Fig"}],
+            "horsesInPastures": [
+                [{
+                    "owner": "Naomi",
+                    "emergencyContactPhone": "null",
+                    "ownerPhone": "553-9909",
+                    "vet": "null",
+                    "emergencyContactName": "null",
+                    "farrier": "null",
+                    "name": "Fig"
+                }],
+                [],
+                []
+            ]
+        },
+        {
+            "dayOfWeek": "T",
+            "notes": [],
+            "horsesInPastures": [
+                [],
+                [],
+                []
+            ]
+        },
+        {
+            "dayOfWeek": "W",
+            "notes": [],
+            "horsesInPastures": [
+                [],
+                [],
+                []
+            ]
+        },
+        {
+            "dayOfWeek": "Th",
+            "notes": [],
+            "horsesInPastures": [
+                [],
+                [],
+                []
+            ]
+        },
+        {
+            "dayOfWeek": "F",
+            "notes": [],
+            "horsesInPastures": [
+                [],
+                [],
+                []
+            ]
+        },
+        {
+            "dayOfWeek": "Sat",
+            "notes": [],
+            "horsesInPastures": [
+                [],
+                [],
+                []
+            ]
+        },
+        {
+            "dayOfWeek": "Sun",
+            "notes": [],
+            "horsesInPastures": [
+                [],
+                [],
+                []
+            ]
+        }
+    ],
+    "pastures": [
+        "P1",
+        "P6",
+        "Stall"
+    ],
+    "horses": [
+        {
+            "owner": "Naomi",
+            "emergencyContactPhone": "null",
+            "ownerPhone": "553-9909",
+            "vet": "null",
+            "emergencyContactName": "null",
+            "farrier": "null",
+            "name": "Fig"
+        },
+        {
+            "owner": "Deanna",
+            "emergencyContactPhone": "null",
+            "ownerPhone": "550-4539",
+            "vet": "null",
+            "emergencyContactName": "null",
+            "farrier": "null",
+            "name": "Brio"
+        }
+    ]
+}
