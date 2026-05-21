@@ -12,11 +12,11 @@ Some functionality of this project will include:
 
 ## Who is this project for?
 
-I'm making this project specifically for my mom, to use to help streamline some processes involved in running our family's horse boarding business. It's intended to be used by barn owners, staff, and potentially boarders as well. 
+I'm making this project specifically for the owner of Epona Stables, to use to help streamline some processes involved in running the horse boarding business. It's intended to be used by barn owners, staff, and potentially boarders as well. 
 
 ## Why did I decide to make this project?
 
-When I was choosing what I wanted to create, I knew from the beginning that I wanted to make a project that would be useful and fulfill an actual, specific purpose. My family owns a stable and has a business boarding horses, and when I spoke to my mom she said that a program to help keep track of the horses would be helpful. Specifically, a program to streamline the process of making the daily turnout board. So that's what I decided to make! My ultimate goal is for my program to be helpful in the day-to-day of running the barn. I've worked at our barn for years and it means a lot to me, so the personal experience and connection also motivates me in bringing this program to life.
+When I was choosing what I wanted to create, I knew from the beginning that I wanted to make a project that would be useful and fulfill an actual, specific purpose. I worked for a stable that has a business boarding horses, and when I spoke to the owner she said that a program to help keep track of the horses would be helpful. Specifically, a program to streamline the process of making the daily turnout board. So that's what I decided to make! My ultimate goal is for my program to be helpful in the day-to-day of running the barn. I've worked at this barn for years and it means a lot to me, so the personal experience and connection also motivates me in bringing this program to life.
 
 
 ## User Stories
