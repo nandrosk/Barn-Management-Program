@@ -65,7 +65,7 @@ public class GUI extends JPanel implements ListSelectionListener {
             topBanner.add(banner);
             add(topBanner, BorderLayout.NORTH);
         } catch (IOException e) {
-            System.out.println("uh oh");
+            System.out.println("Banner image not loaded correctly");
         }
 
         createListScrollPane();
