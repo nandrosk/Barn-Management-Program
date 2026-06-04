@@ -6,8 +6,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Barn;
+import model.Day;
 import model.Horse;
 import model.Note;
+import model.Schedule;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
@@ -97,7 +99,7 @@ public class BarnApp {
     private void displayMenu() {
         System.out.println("\nSelect from:");
         System.out.println("\th -> View the horses in the barn");
-        System.out.println("\tt-> View a day's turnout schedule");
+        System.out.println("\tt -> View a day's turnout schedule");
         System.out.println("\tu -> Update schedule");
         System.out.println("\tn -> View a day's notes");
         System.out.println("\ts -> save work room to file");
@@ -250,9 +252,128 @@ public class BarnApp {
         }
     }
 
+    // EFFECTS: prints out the command options for viewTurnoutOnDay
+    private void printViewTurnoutOnDayCommands() {
+        System.out.println("\tSelect which day to view:");
+        System.out.println("\tM -> Monday");
+        System.out.println("\tT -> Tuesday");
+        System.out.println("\tW -> Wednesday");
+        System.out.println("\tTh -> Thursday");
+        System.out.println("\tF -> Friday");
+        System.out.println("\tSat -> Saturday");
+        System.out.println("\tSun -> Sunday");
+        System.out.println("\tq -> Quit to menu");
+    }
+
+
+
+    // EFFECTS: handles the commands for the viewTurnoutOnDay method
+    private void handleViewTurnoutOnDayCommands(String command) {
+        Schedule schedule = barn.getSchedule();
+        Day day;
+        command = command.toLowerCase();
+        if (command.equals("m")) {
+            day = schedule.getDay(0);
+        } else if (command.equals("t")) {
+            day = schedule.getDay(1);
+        } else if (command.equals("w")) {
+            day = schedule.getDay(2);
+        } else if (command.equals("th")) {
+            day = schedule.getDay(3);
+        } else if (command.equals("f")) {
+            day = schedule.getDay(4);
+        } else if (command.equals("sat")) {
+            day = schedule.getDay(5);
+        } else if (command.equals("sun")) {
+            day = schedule.getDay(6);
+        } else {
+            System.out.println("Selection not valid...");
+            day = null;
+        }
+
+        if (day != null) {
+            System.out.println(day.getDayOfWeek());
+            int numPastures = barn.getPastures().size();
+            for (int i = 0; i < numPastures; i++) {
+                System.out.println(barn.getPastures().get(i));
+                for (Horse horse : day.getHorsesInPasture(i)) {
+                    System.out.println("\t" + horse.getHorseName());
+                }
+                System.out.println();
+            }
+
+            // display menu and handle commands for adding, removing, moving, etc.
+            updatePastures(day);
+
+        }
+    }
+
     // EFFECTS: print out the horses in pastures on a given day
     private void viewTurnoutOnDay() {
-        // stub
+        printViewTurnoutOnDayCommands();
+
+        String command = input.next();
+        command = command.toLowerCase();
+        while (!command.equals("q")) {
+            handleViewTurnoutOnDayCommands(command);
+            printViewTurnoutOnDayCommands();
+            command = input.next();
+        }
+    }
+
+    private void updatePastures(Day day) {
+        printUpdatePastureOptions();
+
+        String command = input.next();
+        while (!command.equals("q")) {
+            handleUpdatePasturesCommands(command, day);
+            printUpdatePastureOptions();
+            command = input.next();
+        }
+    }
+
+    private void printUpdatePastureOptions() {
+        System.out.println("\tSelect from:");
+        System.out.println("\tadd -> Add a horse to a pasture");
+        System.out.println("\trem -> Remove a horse from a pasture");
+        System.out.println("\tmove -> Move a horse from one pasture to another");
+        System.out.println("\tq -> Quit to previous menu");
+    }
+
+    private void handleUpdatePasturesCommands(String command, Day day) {
+        System.out.println("\tEnter the name of the horse you're moving");
+        String horseToMove = input.next();
+        while (barn.getHorse(horseToMove) == null) {
+            System.out.println("\tInvalid selection. Please try again");
+            horseToMove = input.next();
+        }
+
+        System.out.println("\tEnter the name of the pasture you're adding to, removing from, or moving a horse to");
+        String pastureTo = input.next();
+        while (!barn.getPastures().contains(pastureTo)) {
+            System.out.println("\tInvalid selection. Please try again");
+            pastureTo = input.next();
+        }
+
+        if (command.equals("add")) {
+            day.addHorseToPasture(barn.getHorse(horseToMove), pastureTo);
+            System.out.println(horseToMove + " has been added to " + pastureTo);
+        } else if (command.equals("rem")) {
+            day.removeHorse(barn.getHorse(horseToMove), pastureTo);
+            System.out.println(horseToMove + " has been removed from " + pastureTo);
+        } else if (command.equals("move")) {
+            System.out.println("\tEnter the name of the pasture the horse was in originally");
+            String pastureFrom = input.next();
+            while (!barn.getPastures().contains(pastureFrom)) {
+                System.out.println("\tInvalid selection. Please try again");
+                pastureFrom = input.next();
+            }
+
+            day.moveHorse(barn.getHorse(horseToMove), pastureFrom, pastureTo);
+            System.out.println(horseToMove + " has been moved from " + pastureFrom + " to " + pastureTo);
+        } else {
+            System.out.println("Selection not valid...");
+        }
     }
 
     // EFFECTS: prints info about a given horse

@@ -108,6 +108,10 @@ public class Day implements Writeable {
         return notes;
     }
 
+    public ArrayList<String> getPastures() {
+        return pastures;
+    }
+
     public String getDayOfWeek() {
         return dayOfWeek;
     }

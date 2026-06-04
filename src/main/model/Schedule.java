@@ -15,19 +15,19 @@ public class Schedule {
             String day;
             // case
             if (i == 0) {
-                day = "M";
+                day = "Monday";
             } else if (i == 1) {
-                day = "T";
+                day = "Tuesday";
             } else if (i == 2) {
-                day = "W";
+                day = "Wednesday";
             } else if (i == 3) {
-                day = "Th";
+                day = "Thursday";
             } else if (i == 4) {
-                day = "F";
+                day = "Friday";
             } else if (i == 5) {
-                day = "Sat";
+                day = "Saturday";
             } else {
-                day = "Sun";
+                day = "Sunday";
             }
             days.add(new Day(day, pastures));
         }

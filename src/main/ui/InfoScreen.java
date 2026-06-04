@@ -46,7 +46,7 @@ public class InfoScreen extends JPanel implements ListSelectionListener {
             topBanner.add(banner);
             add(topBanner, BorderLayout.NORTH);
         } catch (IOException e) {
-            System.out.println("uh oh");
+            System.out.println("Info screen banner didn't render correctly");
         }
 
         add(createScrollPane(), BorderLayout.CENTER);
