@@ -28,8 +28,8 @@ public class GUI extends JPanel implements ListSelectionListener {
 
     private JList list;
     private DefaultListModel listModel;
-    private JList infoList;
-    private DefaultListModel infoListModel;
+    private JList dayList;
+    private DefaultListModel dayListModel;
 
     private static final String addString = "Add Horse";
     private static final String removeString = "Remove Horse";
@@ -38,11 +38,16 @@ public class GUI extends JPanel implements ListSelectionListener {
     private JButton saveButton;
     private JButton loadButton;
     private JButton viewInfoButton;
+    private JButton viewScheduleButton;
     private JTextField horseName;
     private JTextField ownerName;
     private JTextField ownerNum;
     private Barn barn;
     JScrollPane listScrollPane;
+    JScrollPane dayScrollPane;
+    JPanel horsesPane;
+
+    private static String[] daysOfTheWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 
     private static final String JSON_STORE = "./data/barn.json";
     private JsonWriter jsonWriter;
@@ -68,8 +73,11 @@ public class GUI extends JPanel implements ListSelectionListener {
             System.out.println("Banner image not loaded correctly");
         }
 
+        // calling methods to create the panes and adding them to the main frame
         createListScrollPane();
-        add(listScrollPane, BorderLayout.CENTER);
+        add(horsesPane, BorderLayout.CENTER);
+        createDaysScrollPane();
+        add(dayScrollPane, BorderLayout.WEST);
         add(createButtonPane(), BorderLayout.PAGE_END);
         add(createFieldPane(), BorderLayout.EAST);
     }
@@ -127,6 +135,10 @@ public class GUI extends JPanel implements ListSelectionListener {
         viewInfoButton = new JButton("View Info");
         viewInfoButton.setActionCommand("View Info");
         viewInfoButton.addActionListener(new ViewInfoListener());
+
+        viewScheduleButton = new JButton("View Schedule");
+        viewScheduleButton.setActionCommand("View Schedule");
+        viewScheduleButton.addActionListener(new ViewScheduleListener());
     }
 
     // EFFECTS: creates and returns the pane with the buttons
@@ -138,7 +150,9 @@ public class GUI extends JPanel implements ListSelectionListener {
         buttonPane.add(removeButton);
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(viewInfoButton);
-        buttonPane.add(Box.createHorizontalStrut(15));
+        buttonPane.add(Box.createHorizontalStrut(5));
+        buttonPane.add(viewScheduleButton);
+        buttonPane.add(Box.createHorizontalStrut(20));
         buttonPane.add(saveButton);
         buttonPane.add(Box.createHorizontalStrut(5));
         buttonPane.add(loadButton);
@@ -183,6 +197,32 @@ public class GUI extends JPanel implements ListSelectionListener {
         list.addListSelectionListener(this);
         list.setVisibleRowCount(5);
         listScrollPane = new JScrollPane(list);
+
+        // horsesPane is the pane that will have the list of horses and the label
+        horsesPane = new JPanel();
+        horsesPane.setLayout(new BoxLayout(horsesPane, BoxLayout.Y_AXIS));
+        JLabel horseLabel = new JLabel("Horses Currently Boarded:");
+
+        // adding both elements to the pane
+        horsesPane.add(horseLabel);
+        horsesPane.add(listScrollPane);
+    }
+
+    // EFFECTS: creates and returns the pane with the list of days of the week
+    private void createDaysScrollPane() {
+        // adding the days to the list to be displayed
+        dayListModel = new DefaultListModel();
+        for (String cur : daysOfTheWeek) {
+            dayListModel.addElement(cur);
+        }
+
+        // Create the list and put it in a scroll pane.
+        dayList = new JList(dayListModel);
+        dayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        dayList.setSelectedIndex(0);
+        dayList.addListSelectionListener(this);
+        dayList.setVisibleRowCount(5);
+        dayScrollPane = new JScrollPane(dayList);
     }
 
     // MODIFIES: this
@@ -204,11 +244,27 @@ public class GUI extends JPanel implements ListSelectionListener {
     // EFFECTS: creates an info screen for the selected horse and shows it
     public void viewInfo(Horse horse) {
         // Create and set up the window.
-        JFrame frame = new JFrame("BarnManager");
+        JFrame frame = new JFrame(horse.getHorseName() + "'s Information");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Create and set up the content pane.
         JComponent newContentPane = new InfoScreen(horse, this);
+        newContentPane.setOpaque(true); // content panes must be opaque
+        frame.setContentPane(newContentPane);
+
+        // Display the window.
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    // EFFECTS: creates an screen showing the schedule for the selected day and displays it
+    public void viewSchedule(int dayOfTheWeek) {
+        // Create and set up the window.
+        JFrame frame = new JFrame(barn.getSchedule().getDay(dayOfTheWeek).getDayOfWeek() + "'s Schedule");
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        // Create and set up the content pane.
+        JComponent newContentPane = new ScheduleScreen(dayOfTheWeek, this, barn);
         newContentPane.setOpaque(true); // content panes must be opaque
         frame.setContentPane(newContentPane);
 
@@ -254,6 +310,17 @@ public class GUI extends JPanel implements ListSelectionListener {
         // functionality for changing it
         public void actionPerformed(ActionEvent e) {
             viewInfo(barn.getHorse((String) list.getSelectedValue()));
+        }
+    }
+
+    // TO DO
+    // The object responsible for carrying out the task associated with
+    // the view schedule button
+    class ViewScheduleListener implements ActionListener {
+        // EFFECTS: opens a new window with the selected day's schedule and
+        // functionality for changing it
+        public void actionPerformed(ActionEvent e) {
+            viewSchedule((int) list.getSelectedIndex());
         }
     }
 

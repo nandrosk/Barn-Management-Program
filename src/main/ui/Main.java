@@ -12,8 +12,8 @@ import java.awt.event.*;
 public class Main {
     public static void main(String[] args) throws Exception {
         System.out.println("Welcome to my project!");
-        BarnApp app = new BarnApp(); //(uncomment this to use the old UI)
-        //createAndShowGUI();
+        //BarnApp app = new BarnApp(); //(uncomment this to use the old UI)
+        createAndShowGUI();
     }
 
     // Create the GUI and show it.
